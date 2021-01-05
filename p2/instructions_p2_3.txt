@@ -1,0 +1,27 @@
+Dynamic Allocation
+
+Use a command line argument for the total number of students (n>2).
+In the standard input, get n(the number you input) names in a single line when the
+instruction “enter names:” is given. Use 2D dynamic allocation to store all names
+in one variable.
+Print your result in standard output.
+
+ex)
+    p2_3 4
+    enter 4 names:
+    Bravo Charlie Delta Echo
+    the names you entered:
+    Bravo
+    Charlie
+    Delta
+    Echo
+
+program name : p2_3.c
+data structure : array of pointers.
+input : n names
+output : n names
+conditions:
+1. the number of students should be more than two.
+2. use dynamic allocation to store names (malloc())
+3. the length of the user name should be up to 30 characters.
+4. no black space is allowed in the name.

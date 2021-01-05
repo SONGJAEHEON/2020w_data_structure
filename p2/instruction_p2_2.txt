@@ -1,0 +1,14 @@
+Array of Characters
+
+obtain a user name from the standard input, and put it on the standard output.
+ex)
+    enter you name:
+    Abraham Lincoln
+    you name is Abraham Lincoln
+
+program name : p2_2.c
+data structure : array of characters.
+input : a user name(string)
+conditions:
+1. the length of the user name should be up to 30 characters.
+2. black spaced should also be part of the name.
