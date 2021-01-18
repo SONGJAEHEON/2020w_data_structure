@@ -1,0 +1,64 @@
+Posix Evaluation using Stack
+
+available operators : +, -, *, /, and %
+not used : (, )
+
+operands : single-digit numbers (1,2,3,4,5,6,7,8, and 9)
+conditions:
+    The expression should be no more than 100 characters.
+    The delimiter for the end of the expresstion is '#'.
+rules:
+    When you meet an operand(number), push it onto the stack.
+    When you meet an operator, pop 2 operands from the stack and perform the operation, and push the result back to the stack.
+
+functions:
+    CreateStack : create a new stack with the size of max.
+    Push : push a new element at the end of the element in the stack. If your stack is full, just print an error message.
+    Pop : pop the element in the end of the stack. If stack does not have any element, just print an error message.
+    DeleteStack : free all the memory allocated to stack.
+    IsFull : check if the stack is full.
+    IsEmpty : check if the stack is empty.
+
+skeleton code
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Stack{
+    int* key;
+    int top;
+    int max_stack_size;
+} Stack;
+
+Stack* CreateStack(int max);
+void Push(Stack* S, int X);
+int Pop(Stack* S);
+void DeleteStack(Stack* S);
+int IsEmpty(Stack* S);
+int IsFull(Stack* S);
+
+void main(int argc, char* argv[]){
+    FILE* fi = fopen(argv[1], "r");
+
+    Stack* stack;
+    char input_str[101];
+    int max, i = 0, a, b, result;
+
+    fgets(input_str, 101, fi);
+    max = strlen(input_str);
+
+    // operations
+
+    printf("\nevaluation result : %d\n", result);
+    fclose(fi);
+    DeleteStack(stack);
+}
+
+Stack* CreateStack(int max){
+    Stack* S = NULL;
+    S = (Stack*)malloc(sizeof(max));
+    S->key = (int*)malloc(sizeof(int)*max);
+    S->max_stack_size = max;
+    S->top = -1;
+    return S;
+}
