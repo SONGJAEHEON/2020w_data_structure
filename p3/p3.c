@@ -67,6 +67,7 @@ int main(int argc, char* argv[]){
     }
     DeleteList(header);
     fclose(input);
+    
     return 0;
 }
 
