@@ -69,34 +69,31 @@ int main(int argc, char* argv[]){
     fclose(input);
     return 0;
 }
-// List MakeEmpty(List L);
-// int IsEmpty(List L);
-// int IsLast(Position P, List L);
-// void Insert(ElementType X, List L, Position P);
-// void PrintList(List L);
-// void Delete(ElementType X, List L);
-// Position Find(ElementType X, List L);
-// Position FindPrevious(ElementType X, List L);
-// void DeleteList(List L);
 
 List MakeEmpty(List L){
-    L->element = 0;
-    L->next = NULL;
+    PtrToNode newNode = (PtrToNode)malloc(sizeof(struct Node));
+    newNode->element = 0;
+    newNode->next = NULL;
 
-    return L;
+    return newNode;
 }
 
-int Isempty(List L){
+int IsEmpty(List L){
     return (L->next == NULL);
 }
 
 int IsLast(Position P, List L){
-    return (P->next == NULL || P == NULL);
+    return (P == NULL);
 }
 
 void Insert(ElementType X, List L, Position P){
     if(P == NULL){
         printf("Insertion(%d) Failed : cannot find the location to be inserted\n", X);
+    }else if(L == P && L->next == NULL){
+        PtrToNode newNode = (PtrToNode)malloc(sizeof(struct Node));
+        newNode->element = X;
+        newNode->next = NULL;
+        L->next = newNode;
     }else{
         PtrToNode newNode = (PtrToNode)malloc(sizeof(struct Node));
         newNode->element = X;
@@ -108,25 +105,41 @@ void Insert(ElementType X, List L, Position P){
 }
 
 void PrintList(List L){
-    while(L->next != NULL){
-        printf("key:%d\t", L->element);
-        L = L->next;
+    Position tmp = L;
+    if(tmp->next == NULL){
+        printf("List is empty.\n");
+    }else{
+        tmp = tmp->next;
+        while(tmp->next != NULL){
+            printf("key:%d\t", tmp->element);
+            tmp = tmp->next;
+        }
+        printf("key:%d\n", tmp->element);
     }
-    printf("key:%d\t", L->element);
 
     return;
 }
 
 void Delete(ElementType X, List L){
-    Position p = FindPrevious(X, L);
-    Position tmp = p->next;
-    if(p == NULL){
+    if(IsEmpty(L)){
         printf("Deletion failed : element %d is not in the list\n", X);
     }else{
-        p->next = p->next->next;
-        free(tmp);
+        Position p1 = FindPrevious(X, L);
+        Position p2 = Find(X, L);
+        Position p3 = NULL;
+        if(p2 != NULL && p2->next != NULL){
+            p3 = p2->next;
+        }
+        if(p2 == NULL){
+            printf("Deletion failed : element %d is not in the list\n", X);
+        }else if(p3 == NULL){
+            p1->next = NULL;
+            free(p2);
+        }else{
+            p1->next = p3;
+            free(p2);
+        }
     }
-
     return;
 }
 
@@ -138,12 +151,10 @@ Position Find(ElementType X, List L){
     if(X == -1) return tmp;
 
     if(IsEmpty(L)){
-        printf("Could not find %d in the list\n", X);
         return NULL;
     }
     while(tmp->element != X){
         if(tmp->next == NULL){
-            printf("Could not find %d in the list\n", X);
             return NULL;
         }
         else tmp = tmp->next;
@@ -156,12 +167,13 @@ Position FindPrevious(ElementType X, List L){
     Position tmp;
     tmp = L;
     if(IsEmpty(L)){
-        printf("Could not find %d in the list\n", X);
+        return NULL;
+    }
+    if(tmp->next == NULL){
         return NULL;
     }
     while(tmp->next->element != X){
         if(tmp->next->next == NULL){
-            printf("Could not find %d in the list\n", X);
             return NULL;
         }
         else tmp = tmp->next;
@@ -171,7 +183,7 @@ Position FindPrevious(ElementType X, List L){
 }
 
 void DeleteList(List L){
-    List tmp = NULL;
+    Position tmp = NULL;
     while(L->next != NULL){
         tmp = L;
         L = L->next;
