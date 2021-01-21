@@ -11,13 +11,12 @@ Tree* insertNode(Tree* root, int key);
 void printInorder(Tree* root);
 void deleteTree(Tree* root);
 
-void main(int argc, int* argv[]){
+void main(int argc, char* argv[]){
     FILE* fi = fopen(argv[1], "r");
     char cv;
     int key;
 
     Tree* root = NULL;
-
     while(!feof(fi)){
         fscanf(fi, "%c", &cv);
         switch(cv){
@@ -28,11 +27,14 @@ void main(int argc, int* argv[]){
             case 'p':
                 fscanf(fi, "%c", &cv);
                 if(cv == 'i') printInorder(root);
-                printf('\n');
+                putchar('\n');
+                // to satisfy the condition 'feof(fi)'
+                fscanf(fi, "%c", &cv);
                 break;
         }
     }
     deleteTree(root);
+    fclose(fi);
 }
 
 void deleteTree(Tree* root){
@@ -43,9 +45,33 @@ void deleteTree(Tree* root){
 }
 
 Tree* insertNode(Tree* root, int key){
+    if(root == NULL){
+        Tree * tmp = (Tree *)malloc(sizeof(Tree));
+        tmp->value = key;
+        tmp->left = NULL;
+        tmp->right = NULL;
+        printf("insert %d\n", key);
 
+        return tmp;
+    }else{
+        if(key < root->value){
+            root->left = insertNode(root->left, key);
+        }else if(key > root->value){
+            root->right = insertNode(root->right, key);
+        }else{
+            printf("Insertion Error : There is already %d in the tree.\n", key);
+        }
+
+        return root;
+    }
 }
 
-void deleteTree(Tree* root){
-    
+void printInorder(Tree* root){
+    if(root == NULL) return;
+
+    printInorder(root->left);
+    printf("%d ", root->value);
+    printInorder(root->right);
+
+    return;
 }

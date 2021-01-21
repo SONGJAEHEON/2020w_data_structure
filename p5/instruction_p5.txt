@@ -45,7 +45,7 @@ void main(int argc, int* argv[]){
             case 'p':
                 fscanf(fi, "%c", &cv);
                 if(cv == 'i') printInorder(root);
-                printf('\n');
+                printf("\n");
                 break;
         }
     }
@@ -63,6 +63,6 @@ Tree* insertNode(Tree* root, int key){
 
 }
 
-void deleteTree(Tree* root){
+void printInorder(Tree* root){
 
 }
