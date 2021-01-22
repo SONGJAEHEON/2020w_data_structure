@@ -1,0 +1,76 @@
+Binary Max Heap
+
+function:
+Heap * CreateHeap(int heapSize):
+    Create a heap with the size of 'heapSize'
+void Insert(Heap * heap, int value):
+    Insert a new key to the max heap.
+    You should find the right position for the new key to maintain the max heap.
+    If heap is full, print an erro message.
+    If the key already exists in the heap, print an error message.
+    Print what key you insert.
+int Find(Heap * heap):
+    Find the key in the heap.
+    Return 1 if the value exists.
+    Otherwise, return 0.
+int DeleteMax(Heap * heap):
+    Delete the max in root node and reconstruct the heap to maintain the max heap.
+    If your list does not have any element, just print an error message.
+void PrintHeap(Heap * heap):
+    Print the entire heap. If your queue is empty, just print an error message.
+
+command:
+n x:
+    Create a new heap with the size of x.
+    The number x is the maximum size of the MaxHeap.
+    This operation will always be given in the first line of th eoperations in your input file.
+i x:
+    Insert a new key 'x' into the max heap.
+    If the key already exists in the heap, print an error message.
+    Print what key you insert.
+f x:
+    Find the given key to check whether the key exists in the heap.
+d:
+    Delete the max key in the root node.
+p:
+    Print the entire max heap.
+
+skeleton code
+struct HeapStruct{
+    int Capacity;
+    int Size;
+    ElementType * Elements;
+};
+
+void main(int argc, char * argv[]){
+    FILE * fi = fopen(argv[1], "r");
+    char cv;
+    Heap * maxHeap;
+    int heapSize, key;
+    while(!feof(fi)){
+        fscanf(fi, "%c", &cv);
+        switch(cv){
+            case 'n':
+                fscanf(fi, "5d", &heapSize);
+                maxHeap = CreateHeap(heapSize);
+                break;
+            case 'i':
+                fscanf(fi, "%d", &key);
+                Insert(maxHeap, key);
+                break;
+            case 'd':
+                DeleteMax(maxHeap);
+                break;
+            case 'p':
+                PrintHeap(maxHeap);
+                break;
+            case 'f':
+                fscanf(fi, "%d", &key);
+                if(Find(maxHeap, key))
+                    printf("%d is in the tree.\n", key);
+                else
+                    printf("%d is not in the tree.\n", key);
+                break;
+        }
+    }
+}
