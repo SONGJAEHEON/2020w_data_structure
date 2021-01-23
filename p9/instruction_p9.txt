@@ -1,0 +1,59 @@
+Maze
+
+function
+void init(DisjointSets * sets, DisjointSets * maze_print, int num):
+    Initialize all cells to set and maze_print.
+void union(DisjointSets * sets, int i, int j):
+    Union two sets.
+int find(DisjointSets * sets, int i):
+    Find the set including the number and return the representative member of the set.
+void createMaze(DisjointSets * sets, DisjointSets * maze_print, int num):
+    Generate a maze that includes a path from Start position to End position without any cycles.
+    You can generate such a maze by randomly choosing a cell and direction.
+    Use Union-Find ADT. For random number generation, use the library functions.
+void printMaze(DisjointSets * sets, int num):
+    Print the resulting maze.
+void freeMaze(DisjointSets * sets, DisjointSets * maze_print):
+    Free memory of the maze.
+
+structure
+    typedef struct _DisjointSet{
+        int size_maze;
+        int * ptr_arr;
+    } DisjointSets;
+variable
+    sets : means the number between the walls
+    maze_print : means the wall (-1 : yes, 0 : no)
+
+Use srand() and rand() functions in <stdlib.h> and time() function in <time.h>
+    example:
+        #include <stdlib.h>
+        #include <time.h> 
+        srand((unsigned int)time(NULL)); // generate seed
+        ...
+        int x = rand() // rand() function returns integer from 0 to 32767 
+        ...
+        int y = rand()%10 // y is from 0 to 9
+
+
+skeleton code
+
+typedef struct _DisjointSet{
+    int size_maze;
+    int * ptr_arr;
+} DisjointSets;
+
+int main(int argc, char * argv[]){
+    int num, i;
+    FILE * fi = open(fi, "r");
+    DisjointSets * sets, * maze_print;
+    fscanf(fi, "%d", &num);
+    sets = (DisjointSets *)malloc(sizeof(DisjointSets));
+    maze_print = (DisjointSets *)malloc(sizeof(DisjointSets));
+    init(sets, maze_print, num);
+    createMaze(sets, maze_print, num);
+    printMaze(maze_print, num);
+    freeMaze(sets, maze_print);
+
+    return 0;
+}
