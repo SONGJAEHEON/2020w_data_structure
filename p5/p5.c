@@ -18,6 +18,10 @@ void main(int argc, char* argv[]){
 
     Tree* root = NULL;
     while(!feof(fi)){
+        // to avoid reading the last line twice
+        if(fread(&cv, 1, 1, fi) == 0)break;
+        else fseek(fi, -1, SEEK_CUR);
+        
         fscanf(fi, "%c", &cv);
         switch(cv){
             case 'i':
@@ -28,8 +32,6 @@ void main(int argc, char* argv[]){
                 fscanf(fi, "%c", &cv);
                 if(cv == 'i') printInorder(root);
                 putchar('\n');
-                // to satisfy the condition 'feof(fi)'
-                fscanf(fi, "%c", &cv);
                 break;
         }
     }

@@ -16,16 +16,16 @@ int DeleteMax(Heap * heap);
 void PrintHeap(Heap * heap);
 
 void main(int argc, char * argv[]){
-    printf("0");
     FILE * fi = fopen(argv[1], "r");
-    printf("1");
     char cv;
     Heap * maxHeap;
     int heapSize, key;
-    printf("2");
     while(!feof(fi)){
+        // to avoid reading the last line twice.
+        if(fread(&cv, 1, 1, fi) == 0)break;
+        else fseek(fi, -1, SEEK_CUR);
+
         fscanf(fi, "%c", &cv);
-        printf("3");
         switch(cv){
             case 'n':
                 fscanf(fi, "%d", &heapSize);
@@ -50,15 +50,18 @@ void main(int argc, char * argv[]){
                 break;
         }
     }
+
+    free(maxHeap->Elements);
     free(maxHeap);
 
     return;
 }
 
 Heap * CreateHeap(int heapSize){
-    Heap * h = (Heap *)malloc(sizeof(int)*(heapSize+2));
+    Heap * h = (Heap *)malloc(sizeof(Heap));
     h->Size = heapSize;
     h->Capacity = 0;
+    h->Elements = (ElementType *)malloc(sizeof(int)*heapSize);
 
     return h;
 }
@@ -68,21 +71,24 @@ void Insert(Heap * heap, int value){
         printf("Insertion Error : Max Heap is full.\n");
     }else if(heap->Capacity == 0){
         heap->Elements[1] = value;
+        heap->Capacity++;
+        printf("insert %d\n", value);
+    }else if(Find(heap, value)){
+            printf("%d is already in the tree.\n", value);
     }else{
         int parent, child;
         child = ++heap->Capacity;
         parent = child / 2;
         heap->Elements[heap->Capacity] = value;
-        while(child > 1 && heap->Elements[parent] < heap->Elements[child]){
+        while(child > 1 && heap->Elements[parent] < value){
             heap->Elements[child] = heap->Elements[parent];
-            parent = parent / 2;
-            child = parent * 2;
+            child = child / 2;
+            parent = child / 2;;
         }
-        heap->Elements[parent] = value;
+        heap->Elements[child] = value;
+        printf("insert %d\n", value);
     }
-    heap->Capacity++;
-    printf("insert %d\n", value);
-
+    
     return;
 }
 
@@ -97,11 +103,13 @@ int Find(Heap * heap, int value){
 int DeleteMax(Heap * heap){
     if(heap->Capacity == 0){
         printf("Deletion Error : Max heap is empty!\n");
+
+        return 0;
     }
-    int val = 1, big, max = heap->Elements[1];
+    int val = 1, big, tmp, max = heap->Elements[1];
     heap->Elements[1] = heap->Elements[heap->Capacity];
     
-    while(val <= heap->Capacity && heap->Elements[2*val]){
+    while(2*val <= heap->Capacity){
         if(2*val+1 > heap->Capacity){
             big = 2 * val;
         }else{
@@ -112,7 +120,9 @@ int DeleteMax(Heap * heap){
             }
         }
         if(heap->Elements[big] > heap->Elements[val]){
+            tmp = heap->Elements[val];
             heap->Elements[val] = heap->Elements[big];
+            heap->Elements[big] = tmp;
         }else{
             break;
         }
@@ -126,9 +136,8 @@ void PrintHeap(Heap * heap){
     if(heap->Capacity == 0){
         printf("Print Error : Maxheap is empty!\n");
     }else{
-        int i = 1;
-        while(i <= heap->Size){
-            printf("%d ",heap->Elements[i]);
+        for(int i = 1; i <= heap->Capacity; i++){
+            printf("%d ", heap->Elements[i]);
         }
         putchar('\n');
     }
