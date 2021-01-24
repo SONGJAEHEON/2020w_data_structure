@@ -1,0 +1,46 @@
+AVL Tree (Adelson-Velsky and Landis Tree)
+
+function:
+AVLTree Insert(ElementType X, AVLTree T):
+    Insert a new node to the AVL Tree.
+    If the key already exists in the tree, print an error message.
+void PrintInorder(AVLTree T):
+    Print the tree by inorder traversal.
+    Print height of the node inside the bracket.
+void DeleteTree(AVLTree T):
+    Free tree.
+Position SingleRotateWithLeft(Position node)
+
+Position SingleRotateWithRight(Position node)
+
+Position DoubleRotateWithLeft(Position node)
+
+Position DoubleRotateWithRight(Position node)
+
+skeleton code
+
+struct AVLNode{
+    ElementType Element;
+    AVLTree Left;
+    AVLTree Right;
+    int Height;
+}
+
+int main(int argc, char** argv){
+    FILE * fp = fopen(argv[1], "r");
+    AVLTree myTree = NULL;
+    int num;
+
+    if(fp == NULL){
+        printf("There is no file : %s\n", argv[1]);
+        exit(-1);
+    }
+    while(fscanf(fp, "%d", &num) != EOF){
+        myTree = Insert(num, myTree);
+        PrintInorder(myTree);
+        printf("\n");
+    }
+
+    DeleteTree(myTree);
+    return 0;
+}
