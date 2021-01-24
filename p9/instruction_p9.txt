@@ -45,7 +45,7 @@ typedef struct _DisjointSet{
 
 int main(int argc, char * argv[]){
     int num, i;
-    FILE * fi = open(fi, "r");
+    FILE * fi = fopen(fi, "r");
     DisjointSets * sets, * maze_print;
     fscanf(fi, "%d", &num);
     sets = (DisjointSets *)malloc(sizeof(DisjointSets));
