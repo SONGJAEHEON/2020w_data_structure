@@ -25,6 +25,7 @@ int main(int argc, char * argv[]){
     createMaze(sets, maze_print, num);
     printMaze(maze_print, num);
     freeMaze(sets, maze_print);
+    fclose(fi);
 
     return 0;
 }
