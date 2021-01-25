@@ -53,6 +53,7 @@ void main(int argc, char * argv[]){
 
     free(maxHeap->Elements);
     free(maxHeap);
+    fclose(fi);
 
     return;
 }
