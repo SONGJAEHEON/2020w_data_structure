@@ -1,0 +1,78 @@
+DFS & BFS
+
+function
+    graph makeGraph(FILE * fi):
+        Create a graph with nodes and edges.
+    void DFS_recursive(graph g, int start, int end):
+        Depth First Search by recursive approach.
+    void DFS_iterative(graph g, int start, int end):
+        Depth First Search by interative using stack.
+    void BFS_search(graph g, int start, int end):
+        Breadth First Search by iterative using queue.
+    stack * create_stack(int num):
+        Create a stack.
+    void push(stack * s, int value):
+        Push a new element at the end of the element in the stack.
+        If the stack is full, just print an error message.
+    int pop(stack * s):
+        Pop the element in the end of stack.
+        If stack does not have any element, just print an error message.
+    void close_stack(stack * s):
+        Free all the memory allocated to stack.
+    queue * create_queue(int size):
+        Create a new queue with the size.
+    void enqueue(queue * q, int value):
+        A new element at the end of the element in the queue.
+        If the queue is full, just print an error message.
+    int dequeue(queue * q):
+        Return the node in the front.
+        If your list does not have any element, jsut print an error message.
+    void close_queue(queue * q):
+        Free all the memory allocated to queue.
+
+
+skeleton code
+
+typedef struct Graph{
+    int num;
+    int ** weight;
+    int * check_visit;
+} graph;
+
+typedef struct Stack{
+    int * contetn;
+    int top;
+    int max_stack_size;
+} stack;
+
+typedef struct CircularQueue{
+    int * content;
+    int first;
+    int rear;
+    int qsize;
+    int max_queue_size;
+} queue;
+
+void main(int argc, char* argv[]){
+    FILE * fi = fopen(argv[1], "r");
+    graph g = makeGraph(fi);
+
+    int start, end;
+    fscanf(fi, "%d-%d", &start, &end);
+
+    printf("DFS recursive : ");
+    DFS_recursive(g, start, end);
+    if(g.num < end)
+        printf("cannot find");
+    else if(g.check_visit[end-1] == 0)
+        printf("cannot find");
+
+    printf("\nDFS iterative : ");
+    DFS_iterative(g, start, end);
+
+    printf("\nBFS : ");
+    BFS_search(g, start, end);
+    printf("\n");
+
+    //free the memory and close file
+}

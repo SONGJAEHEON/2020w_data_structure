@@ -1,0 +1,68 @@
+Dijkstra's algorithm
+
+function
+    Graph createGraph(int size):
+        Create a graph with nodes.
+    void printShortestPath(Graph g):
+        Print the shortest path for the given path.
+    Heap * createMinHeap(int heapSize):
+        Create min heap.
+    Void insertToMinHeap(Heap * minHeap, int vertex, int distance):
+        insert a new vertex to heap.
+    Node deleteMin(Heap * minHeap):
+        delete the smallest distance node for calculation.
+    
+file input
+    line 1 : number for vertices.
+    line 2 : edge information.
+    The result is the shortest path(and cost) from vertex 1 to every other vertices.
+
+input : a file containing information about the number of vertex, edges, connecting vertice, edge weights.
+output : the all vercies' shortest path and cost.
+
+skeleton code
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Graph{
+    int size;
+    int ** vertices;
+    Node * nodes;
+} Graph;
+
+typedef struct Node{
+    int vertex;
+    int dist; //distance
+    int prev;
+} Node;
+
+typedef struct Heap{
+    int Capacity;
+    int Size;
+    Node * Element;
+} Heap;
+
+Graph CreateGraph(int size);
+void printShortestPath(Graph, g);
+Heap * createMinHeap(int heapSize);
+void insertToMinHeap(Heap * minHeap, int vertex, int distance);
+Node deleteMin(Heap * minHeap);
+
+void main(int argc, char * argv[]){
+    FILE * fi = fopen(argv[1], "r");
+    Graph g;
+
+    int size;
+    fscanf(fi, "%d\n", &size);
+    g = CreateGraph(size+1);
+    char temp = 0;
+    while(temp != '\n'){
+        int node1, node2, weight;
+        fscnf(fi, "%d-%d-%d", &node1, &node2, &weight);
+        g.vertices[node1][node2] = weight;
+        temp = fgetc(fi);
+    }
+    printShortestPath(g);
+}
