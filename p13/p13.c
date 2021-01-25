@@ -56,4 +56,32 @@ void main(int argc, char* argv[]){
     printf("\n");
 
     //free the memory and close file
+    fclose(fi);
+}
+
+graph makeGraph(FILE * fi){
+    int i, m, n;
+    char buf[100];
+    graph * g = (graph *)malloc(sizeof(graph));
+    fscanf(fi, "%d", &i);
+    g->num = i;
+    *g->weight = (int *)malloc(sizeof(int)*(i+1));
+    g->weight = (int **)malloc(sizeof(int)*(i+1));
+    g->check_visit = (int *)malloc(sizeof(int)*(i+1));
+    fgets(buf, sizeof(buf), fi);
+    while(!feof(buf)){
+        fscanf(buf, "%d-%d", &m, &n);
+        g->weight[m][n] = 1;
+    }
+    fscanf(fi, "%d-%d", &m, &n);
+
+    for(int j = 1; j <= i; j++){
+        for(int k = 1; k <= j; k++){
+            printf("%d ", g->weight[j][k]);
+        }
+        printf("\n");
+    }
+    printf("%d-%d", m, n);
+
+    return * g;
 }
