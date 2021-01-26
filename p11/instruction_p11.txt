@@ -1,0 +1,58 @@
+Topological Sort
+
+function
+    Graph CreateGraph(int[] nodes):
+        Create a graph with nodes.
+    void InsertEdge(Graph G, int a, int b):
+        Insert an edge.
+    void Topsort(Graph G):
+        Print the graph by topological sort.
+        Sort the smaller number key if same priority.
+    Queue MakeNewQueue(int X):
+        Create a new queue with the size of X.
+    void EnQueue(Queue * Q, int X):
+        A new element at the end of the element in the queue.
+    int DeQueue(Queue * Q):
+        Return the node in the front.
+
+input :
+    Read a set of vertices in the first line and a set of edges in the second line from the given input file.
+    Each line is described below.
+    You may assume that the node is represented by an integer.
+output :
+    The Corresponding  result in the standard output.
+
+skeleton code
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct _Queue * Queue;
+typedef struct _Graph * Graph;
+
+struct _Graph{
+    int size;
+    int * node;
+    int ** matrix;
+};
+
+struct _Queue{
+    int * key;
+    int first;
+    int rear;
+    int qsize;
+    int max_queue_size;
+};
+
+Graph CreateGraph(int * nodes);
+void InsertEdge(Graph G, int a, int b);
+void DeleteGraph(Graph G);
+void Topsort(Graph G);
+Queue MakeNewQueue(int X);
+int IsEmpty(Queue Q);
+int IsFull(Queue Q);
+int DeQueue(Queue Q);
+void EnQueue(Queue Q, int X);
+void DeleteQueue(Queue Q);
+void MakeEmpty(Queue Q);
