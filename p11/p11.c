@@ -71,7 +71,7 @@ Graph CreateGraph(int * nodes){
     for(t = 0; t <= max; t++){
         nodearr[nodes[t]] = 1;
     }
-    int ** matrixarr = (int **)malloc(sizeof(int)*(max+1));
+    int ** matrixarr = (int **)malloc(sizeof(int *)*(max+1));
     for(int i = 0; i <= max; i++){
         matrixarr[i] = (int *)malloc(sizeof(int)*(max+1));
     }
