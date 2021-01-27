@@ -23,7 +23,7 @@ typedef struct CircularQueue{
 
 graph makeGraph(FILE * fi);
 void DFS_recursive(graph g, int start, int end);
-void DFS_recur(graph * g, int * cnt, int k);
+void DFS_recur(graph * g, int k, int end);
 void DFS_iterative(graph g, int start, int end);
 void BFS_search(graph g, int start, int end);
 stack * create_stack(int num);
@@ -46,15 +46,14 @@ void main(int argc, char* argv[]){
     DFS_recursive(g, start, end);
     if(g.num < end)
         printf("cannot find");
-    else if(g.check_visit[end-1] == 0)
+    else if(g.check_visit[end] == 0)
         printf("cannot find");
 
     printf("\nDFS iterative : ");
-    scanf("%d", &start);
     DFS_iterative(g, start, end);
 
+
     printf("\nBFS : ");
-    scanf("%d", &start);
     BFS_search(g, start, end);
     printf("\n");
 
@@ -95,34 +94,30 @@ graph makeGraph(FILE * fi){
 }
 
 void DFS_recursive(graph g, int start, int end){
-    int count = 0, i = 1, j = 1;
-    int * cnt = &count;
-    for(i; i <= g.num; i++){
-        for(j; j <= g.num; j++){
-            if(g.weight[i][j] == 1){
-                break;
-            }
+    int  i = start, j = 0;
+    for(int m = 1; m <= g.num; m++){
+        if(g.weight[i][m] == 1){
+            j = m;
+            break;
         }
     }
-    DFS_recur(&g, cnt, i);
-    if(end > g.num){
-        printf("cannot find\n");
-    }else{
-        putchar('\n');
+    if(j == 0){
+        printf("cannot find the starting numebr!\n");
+        return;
     }
+    DFS_recur(&g, i, end);
 
     return;
 }
 
-void DFS_recur(graph * g, int * cnt, int k){
-    if(g->check_visit[k] == 1) return;
+void DFS_recur(graph * g, int k, int end){
+    if(g->check_visit[k] == 1 || g->check_visit[end] == 1) return;
     g->check_visit[k] = 1;
-    cnt++;
-    //cnt 없어도 될 것 같은데 이따가 확인해보기
     printf("%d ", k);
+    if(k == end) return;
     for(int i = 1; i <= g->num; i++){
         if(g->weight[k][i] == 1){
-            DFS_recur(g, cnt, i);
+            DFS_recur(g, i, end);
         }
     }
 
@@ -130,72 +125,90 @@ void DFS_recur(graph * g, int * cnt, int k){
 }
 
 void DFS_iterative(graph g, int start, int end){
-    int i = 1, j = 1, cnt = 0;
+    int i = start, j= 0, cnt = 0;
     stack * s = create_stack(g.num);
-    for( i = 1; i <= g.num; i++){
-        for( j = 1; j <= g.num; j++){
-            if(g.weight[i][j] == 1){
-                break;
-            }
+
+    for(int l = 1; l <= g.num; l++){
+        g.check_visit[l] = 0;
+    }
+
+    for(int m = 1; m <= g.num; m++){
+        if(g.weight[i][m] == 1){
+            j = m;
+            break;
         }
+    }
+    if(j == 0){
+        printf("cannot find the starting number!\n");
+        return;
     }
     g.check_visit[i] = 1;
     cnt++;
+    printf("%d ", i);
     while(cnt < g.num){
-        printf("%d ", i);
-        for(int j = 1; j <= g.num; j++){
+        if(i == end) break;
+        for(j = 1; j <= g.num; j++){
             if(g.weight[i][j] == 1){
-                if(g.check_visit[j] == 1) return;
+                if(g.check_visit[j] == 1) continue;
                 else{
-                    g.check_visit[j] == 1;
-                    cnt++;
+                    g.check_visit[j] = 1;
                     push(s, j);
                 }
             }
         }
         i = pop(s);
+        printf("%d ", i);
+        cnt++;
     }
-    if(end > g.num){
-        printf("cannot find\n");
-    }else{
-        putchar('\n');
-    }
+    if(g.num < end)
+        printf("cannot find");
+    else if(g.check_visit[end] == 0)
+        printf("cannot find");
     close_stack(s);
 
     return;
 }
 
 void BFS_search(graph g, int start, int end){
-    int i = 1, j = 1, cnt = 0;
+    int i = start, j, cnt = 0;
     queue * q = create_queue(g.num);
-    for( i = 1; i <= g.num; i++){
-        for( j = 1; j <= g.num; j++){
-            if(g.weight[i][j] == 1){
-                break;
-            }
+
+    for(int l = 1; l <= g.num; l++){
+        g.check_visit[l] = 0;
+    }
+
+    for(int m = 1; m <= g.num; m++){
+        if(g.weight[i][m] == 1){
+            j = m;
+            break;
         }
+    }
+    if(j == 0){
+        printf("cannot find the starting number!\n");
+        return;
     }
     g.check_visit[i] = 1;
     cnt++;
+    printf("%d ", i);
     while(cnt < g.num){
-        printf("%d ", i);
+        if(i == end) break;
         for(int j = 1; j <= g.num; j++){
             if(g.weight[i][j] == 1){
-                if(g.check_visit[j] == 1) return;
+                if(g.check_visit[j] == 1) continue;
                 else{
-                    g.check_visit[j] == 1;
-                    cnt++;
+                    g.check_visit[j] = 1;
                     enqueue(q, j);
                 }
             }
         }
         i = dequeue(q);
+        printf("%d ", i);
+        cnt++;
     }
-    if(end > g.num){
-        printf("cannot find\n");
-    }else{
-        putchar('\n');
-    }
+    if(g.num < end)
+        printf("cannot find");
+    else if(g.check_visit[end] == 0)
+        printf("cannot find");
     close_queue(q);
 
     return;
@@ -212,7 +225,7 @@ stack * create_stack(int num){
 }
 
 void push(stack * s, int value){
-    if(s->top == s->max_stack_size){
+    if(s->top + 1 == s->max_stack_size){
         printf("stack is full!\n");
         return;
     }
@@ -260,7 +273,8 @@ int dequeue(queue * q){
         printf("queue is empty!\n");
         return 0;
     }
-    int rtn = q->content[q->first++];
+    q->first = ++q->first%q->max_queue_size;
+    int rtn = q->content[q->first];
     q->qsize--;
 
     return rtn;

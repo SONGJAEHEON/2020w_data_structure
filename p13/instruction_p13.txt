@@ -30,6 +30,11 @@ function
     void close_queue(queue * q):
         Free all the memory allocated to queue.
 
+input file
+    line 1 : range of the nodes.
+    line 2 : edges between nodes.
+    line 3 : 1st number is the starting node. 2nd number is the number that if you find that number, the search ends.
+
 
 skeleton code
 
@@ -64,7 +69,7 @@ void main(int argc, char* argv[]){
     DFS_recursive(g, start, end);
     if(g.num < end)
         printf("cannot find");
-    else if(g.check_visit[end-1] == 0)
+    else if(g.check_visit[end] == 0)
         printf("cannot find");
 
     printf("\nDFS iterative : ");
