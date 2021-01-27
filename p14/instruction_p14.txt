@@ -1,0 +1,41 @@
+Hashing
+
+function
+    void Insert(ElementType Key, struct HashTable * H):
+        Print an error message when a duplicated key is inserted. (request will be rejected)
+        Print a message when a collision occurs.
+        Collision resolution methods are given at the top of the lecture note.
+        Print an error message when the hash table is full.
+        Print a message if the key is inserted.
+    Position find(struct HashTable * H, ElementType value):
+        Return the Node structure. If not, return NULL.
+
+skeleton code
+
+typedef struct ListNode{
+    ElementType Element;
+    Position Next;
+} ListNode;
+
+typedef struct HashTable{
+    int TableSize;
+    List * TheLists;
+} HashTable;
+
+int main(int argc, char * argv[]){
+    FILE * f;
+    f = fopen(argv[1], "r");
+    char index[100];
+    int indexnumber;
+    char * ptr1, * ptr2, * ptr3;
+    char * ptrtmp[3];
+
+    fgets(index, 100, f);
+    ptr1 = strtok_r(index, " ", &ptrtmp[0]);
+
+    indexnumber = atoi(ptr1);
+    HashTable * hs;
+    hs = (HashTable *)malloc(sizeof(HashTable));
+    hs->TableSize = indexnumber;
+    hs->
+}
