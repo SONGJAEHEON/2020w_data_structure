@@ -58,9 +58,9 @@ void main(int argc, char * argv[]){
     fscanf(fi, "%d\n", &size);
     g = CreateGraph(size+1);
     char temp = 0;
-    while(temp != '\n'){
+    while(temp != '\0'){
         int node1, node2, weight;
-        fscnf(fi, "%d-%d-%d", &node1, &node2, &weight);
+        fscanf(fi, "%d-%d-%d", &node1, &node2, &weight);
         g.vertices[node1][node2] = weight;
         temp = fgetc(fi);
     }
