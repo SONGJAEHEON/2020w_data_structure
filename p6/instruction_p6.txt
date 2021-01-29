@@ -17,6 +17,10 @@ Position DoubleRotateWithLeft(Position node)
 
 Position DoubleRotateWithRight(Position node)
 
+input file
+    input : a list of numbers in a file.
+    output : the corresponding result in the standard output.
+
 skeleton code
 
 struct AVLNode{
