@@ -51,31 +51,77 @@ AVLTree Insert(ElementType X, AVLTree T){
         T = newNode;
     }else if(X < T->Element){
         T->Left = Insert(X, T->Left);
-        printf("left inserted\n");
     }else if(X > T->Element){
         T->Right = Insert(X, T->Right);
     }else{
         printf("[Error] %d already in the tree!\n", X);
     }
     getHeight(T);
-    // printf("5 : %d\n", T->Left->Height);
-    // if(T->Left->Height == 1 && T->Right == NULL){
-    //     if(X < T->Left->Element){
-    //         printf("LL\n");
-    //         SingleRotateWithRight(T);
-    //     }else if(X > T->Left->Element){
-    //         printf("LR\n");
-    //         DoubleRotateWithRight(T);
-    //     }
-    // }else if(T->Right->Height == 1 && T->Left == NULL){
-    //     if(X > T->Right->Element){
-    //         printf("RR\n");
-    //         SingleRotateWithLeft(T);
-    //     }else if(X < T->Right->Element){
-    //         printf("RL\n");
-    //         DoubleRotateWithRight(T);
+    if(T->Left != NULL){
+        if(T->Left->Height == 1 && T->Right == NULL){
+            if(X < T->Left->Element){
+                printf("LL\n");
+                T = SingleRotateWithRight(T);
+            }else if(X > T->Left->Element){
+                printf("LR\n");
+                T = DoubleRotateWithRight(T);
+            }
+        }
+    }
+    if(T->Right != NULL){
+        if(T->Right->Height == 1 && T->Left == NULL){
+            if(X > T->Right->Element){
+                printf("RR\n");
+                T = SingleRotateWithLeft(T);
+            }else if(X < T->Right->Element){
+                printf("RL\n");
+                T = DoubleRotateWithRight(T);
+            }
+        }
+    }
+    getHeight(T);
+    if(T->Left != NULL && T->Right != NULL){
+        if(T->Left->Height - T->Right->Height > 1){
+            if(X < T->Left->Element){
+                printf("LL\n");
+                T = SingleRotateWithRight(T);
+            }else if(X > T->Left->Element){
+                printf("LR\n");
+                T = DoubleRotateWithRight(T);
+            }
+        }else if(T->Right->Height - T->Left->Height > 1){
+            if(X > T->Right->Element){
+                printf("RR\n");
+                T = SingleRotateWithLeft(T);
+            }else if(X < T->Right->Element){
+                printf("RL\n");
+                T = DoubleRotateWithRight(T);
+            }
+        }
+    }
+    // if(T->Left != NULL){
+    //     if(T->Left->Height == 1 && T->Right == NULL){
+    //         if(X < T->Left->Element){
+    //             printf("LL\n");
+    //             T = SingleRotateWithRight(T);
+    //         }else if(X > T->Left->Element){
+    //             printf("LR\n");
+    //             T = DoubleRotateWithRight(T);
+    //         }
     //     }
     // }
+    // if(T->Right != NULL){
+    //     if(T->Right->Height == 1 && T->Left == NULL){
+    //         if(X > T->Right->Element){
+    //             printf("RR\n");
+    //             T = SingleRotateWithLeft(T);
+    //         }else if(X < T->Right->Element){
+    //             printf("RL\n");
+    //             T = DoubleRotateWithRight(T);
+    //         }
+    //     }
+    // }
+    getHeight(T);
     // if(getHeight(T->Left) > getHeight(T->Right) + 1){
     //     if(X < T->Left->Element){
     //         printf("LL\n");
@@ -172,16 +218,14 @@ Position SingleRotateWithRight(Position node){
 
 Position DoubleRotateWithLeft(Position node){
     // type RL
-    SingleRotateWithRight(node->Right);
-    Position p = SingleRotateWithLeft(node);
-
-    return p;
+    node->Right = SingleRotateWithRight(node->Right);
+    
+    return SingleRotateWithLeft(node);
 }
 
 Position DoubleRotateWithRight(Position node){
     // type LR
-    SingleRotateWithLeft(node->Left);
-    Position p = SingleRotateWithRight(node);
-
-    return p;
+    node->Left = SingleRotateWithLeft(node->Left);
+    
+    return SingleRotateWithRight(node);
 }
