@@ -48,5 +48,30 @@ int main(int argc, char * argv[]){
     HashTable * hs;
     hs = (HashTable *)malloc(sizeof(HashTable));
     hs->TableSize = indexnumber;
-    hs->TheLists = (List *)
+    hs->TheLists = (List *)malloc(sizeof(ListNode)*indexnumber);
+    int i;
+    for(i = 0; i < indexnumber; i++){
+        hs->TheLists[i] = (List)malloc(sizeof(ListNode));
+    }
+
+    fgets(index, 100, f);
+    ptr2 = strtok_r(index, " ", &ptrtmp[1]);
+    while(ptr2 != NULL){
+        indexnumber = atoi(ptr2);
+        Insert(indexnumber, hs);
+        ptr2 = strtok_r(NULL, " ", &ptrtmp[1]);
+    }
+    Position tmp;
+    fgets(index, 100, f);
+    ptr3 = strtok_r(index, " ", &ptrtmp[2]);
+    while(ptr3 != NULL){
+        indexnumber = atoi(ptr3);
+        tmp = Find(indexnumber, hs);
+        if(tmp == NULL)
+            printf("%d is not in the table\n", indexnumber);
+        else printf("%d is in the table\n", indexnumber);
+        ptr3 = strtok_r(NULL, " ", &ptrtmp[2]);
+    }
+
+    return 0;
 }
