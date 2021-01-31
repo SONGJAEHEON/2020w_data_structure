@@ -10,6 +10,17 @@ function
     Position find(struct HashTable * H, ElementType value):
         Return the Node structure. If not, return NULL.
 
+input file:
+    1st line : Your hash table size is given.
+    2nd line : You obtain all the data that should be inserted into the hash table.
+               Obtain a list of numbers from the second line, and execute an insertion operation for each number in order.
+               If a collision happens, print a message to notify.
+               Duplicated insertion query will be rejected.
+               When hash bucket get dense, program should conduct rehashing.
+    3rd line : The numbers are given for checking whether each number is in the hash table or not.
+               For each number, print the message about the availability.
+
+
 skeleton code
 
 typedef struct ListNode{
@@ -37,5 +48,5 @@ int main(int argc, char * argv[]){
     HashTable * hs;
     hs = (HashTable *)malloc(sizeof(HashTable));
     hs->TableSize = indexnumber;
-    hs->
+    hs->TheLists = (List *)
 }
